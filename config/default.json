@@ -1,0 +1,7 @@
+{
+  "mongoURI" :"mongodb+srv://AdminSarvesh:AdminSarvesh@connectme.efiun.mongodb.net/AdminSarvesh?retryWrites=true&w=majority",
+  "jwtToken":"12345JwtToken",
+  "githubClient_ID":"b46f0b6a294e1d78ae08",
+  "githubSECRET_KEY":"a7fa131ebfa93ea13663da1a258b9679f8643f3b"
+}
+
