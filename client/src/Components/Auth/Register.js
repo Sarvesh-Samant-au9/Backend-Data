@@ -1,8 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setAlert } from "../../Actions/alert";
+import PropTypes from "prop-types";
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -45,11 +48,21 @@ const Register = () => {
   //     }
   //   }
   // };
-  
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
       console.log("Passwords Dont Match");
+      // Passwords Dont Match is passed as a message to the action alert.js
+      // danger is passed as alert-type
+      setAlert(
+        "Passwords Don't Match, Kindly Reconfirm those passwords",
+        "danger"
+      );
+      // props.setAlert(
+      //   "Passwords Don't Match, Kindly Reconfirm those passwords",
+      //   "danger"
+      // );
     } else {
       console.log("Succcess");
       console.log(formData);
@@ -115,4 +128,12 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
+
+// connect takes 2 things
+// 1 state to map that is if to display something from the state
+//2 Object with Action allows to access props.setAlert
+
+export default connect(null, { setAlert })(Register);
