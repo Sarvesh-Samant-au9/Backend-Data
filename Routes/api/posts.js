@@ -171,7 +171,7 @@ router.put(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const user = await await Users.findById(req.user.id).select("-password");
+      const user = await Users.findById(req.user.id).select("-password");
       const post = await Post.findById(req.params.id);
 
       const newComment = {
@@ -195,7 +195,7 @@ router.put(
 // @desc delete comment of a particular post
 // @access Private
 
-router.delete("/comment/delete/:id/:comment_id", auth, async (req, res) => {
+router.delete("/comment/delete/:id(postID)/:comment_id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -225,7 +225,6 @@ router.delete("/comment/delete/:id/:comment_id", auth, async (req, res) => {
     post.comments.splice(removeIndex, 1);
     await post.save();
     res.json(post.comments);
-    
   } catch (error) {
     console.log(error);
     res.status(400).send("Internal Server Error");
