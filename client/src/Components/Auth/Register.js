@@ -1,11 +1,12 @@
 // import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAlert } from "../../Actions/alert";
+import { register } from "../../Actions/auth";
 import PropTypes from "prop-types";
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -64,10 +65,15 @@ const Register = ({ setAlert }) => {
       //   "danger"
       // );
     } else {
-      console.log("Succcess");
+      console.log("Success");
       console.log(formData);
+      register({ name, email, password });
     }
   };
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <>
       <h1 className="large text-primary">Sign Up</h1>
@@ -92,6 +98,7 @@ const Register = ({ setAlert }) => {
             name="email"
             value={email}
             onChange={(e) => onChange(e)}
+            required
           />
           <small className="form-text">
             This site uses Gravatar so if you want a profile image, use a
@@ -130,10 +137,18 @@ const Register = ({ setAlert }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
 // connect takes 2 things
 // 1 state to map that is if to display something from the state
 //2 Object with Action allows to access props.setAlert
 
-export default connect(null, { setAlert })(Register);
+// export default connect(null, { setAlert })(Register);
+
+const mapStatetoProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStatetoProps, { setAlert, register })(Register);

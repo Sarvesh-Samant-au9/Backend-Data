@@ -1,0 +1,22 @@
+Create Store
+bring in middleware(thunk) composewithDevtools
+
+RootReducer
+export the Store default
+
+Bring in app.js
+bring in providerand store
+Wrapp all in Provider and pass store 
+
+if morethan 1 reducers , bring combinereducers
+
+Create alert reducer and bring it in combinereducers
+
+create the reducer by passing initialState and action
+
+create ACtion File
+
+for reducers use switchCase
+
+
+AuthEntication reducer

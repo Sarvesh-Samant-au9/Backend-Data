@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
-const Login = () => {
+import { Link, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../Actions/auth";
+const Login = ({ loginUser, isAuthenticated }) => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -11,11 +13,18 @@ const Login = () => {
   const onChange = (e) =>
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => e.preventDefault();
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    loginUser(password, email);
+  };
+
+  // Redirect
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <>
-      <div className="alert alert-danger">Invalid credentials</div>
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Sign into Your Account
@@ -50,5 +59,14 @@ const Login = () => {
     </>
   );
 };
+Login.propType = {
+  loginUser: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
 
-export default Login;
+const mapStatetoProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+
+export default connect(mapStatetoProps, { loginUser })(Login);
