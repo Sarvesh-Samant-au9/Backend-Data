@@ -4,6 +4,7 @@ import Navbar from "./Components/Layout/Navbar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./Components/Auth/Login";
 import Register from "./Components/Auth/Register";
+
 import { useEffect } from "react";
 
 // Redux Bring in
@@ -12,6 +13,8 @@ import store from "./Store";
 import Alert from "./Components/Layout/Alert";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "../src/Actions/auth";
+import Dashboard from "./Components/Dashboard/Dashboard";
+import PrivateRoute from "./Components/Routes/PrivateRoute";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -31,6 +34,7 @@ function App() {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
         </section>
       </Router>
