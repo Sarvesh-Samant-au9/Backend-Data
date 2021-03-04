@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../Actions/profile";
 import Spinner from "../Layout/Spinner";
 import { Link } from "react-router-dom";
+import DashboardButtons from "./DashboardButtons";
 
 const Dashboard = ({
   auth: { user },
@@ -28,7 +29,8 @@ const Dashboard = ({
         {profile !== null ? (
           <>
             {" "}
-            <strong>Has a Profile</strong>{" "}
+            {/* <strong>Has a Profile</strong>  */}
+            <DashboardButtons />
           </>
         ) : (
           <>
