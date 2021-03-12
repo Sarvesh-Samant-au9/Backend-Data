@@ -76,10 +76,11 @@ export const loginUser = (password, email) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (error) {
-    const errors = error.response.data.errors;
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-    }
+    const errors = error.response.data.msg;
+    // if (errors) {
+    //   errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    // }
+    dispatch(setAlert(errors, "danger"));
     dispatch({
       type: LOGIN_FAILURE,
     });

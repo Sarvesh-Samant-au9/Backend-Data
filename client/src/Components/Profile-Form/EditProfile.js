@@ -35,16 +35,12 @@ const EditProfile = ({
       skills: isLoading || !profile.skills ? " " : profile.skills,
       status: isLoading || !profile.status ? " " : profile.status,
       bio: isLoading || !profile.bio ? " " : profile.bio,
-      twitter:
-        isLoading || !profile.social.twitter ? " " : profile.social.twitter,
-      facebook:
-        isLoading || !profile.social.facebook ? " " : profile.social.facebook,
-      linkedin:
-        isLoading || !profile.social.linkedin ? " " : profile.social.linkedin,
-      youtube:
-        isLoading || !profile.social.youtube ? " " : profile.social.youtube,
+      twitter: isLoading || !profile.twitter ? " " : profile.social.twitter,
+      facebook: isLoading || !profile.facebook ? " " : profile.social.facebook,
+      linkedin: isLoading || !profile.linkedin ? " " : profile.social.linkedin,
+      youtube: isLoading || !profile.youtube ? " " : profile.social.youtube,
       instagram:
-        isLoading || !profile.social.instagram ? " " : profile.social.instagram,
+        isLoading || !profile.instagram ? " " : profile.social.instagram,
       githubUserName:
         isLoading || !profile.githubUserName ? " " : profile.githubUserName,
     });

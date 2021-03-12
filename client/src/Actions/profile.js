@@ -1,6 +1,14 @@
 import axios from "axios";
 import { setAlert } from "../Actions/alert";
-import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from "./type";
+import {
+  ACCOUNT_DELETED,
+  CLEAR_PROFILE,
+  GET_PROFILE,
+  GET_PROFILES,
+  PROFILE_ERROR,
+  UPDATE_PROFILE,
+  GET_REPOS,
+} from "./type";
 
 // Get Current User
 export const getCurrentProfile = () => async (dispatch) => {
@@ -119,6 +127,128 @@ export const addEducation = (formData, history) => async (dispatch) => {
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
+      },
+    });
+  }
+};
+
+// Delete Experience
+export const deleteExperience = (id) => async (dispatch) => {
+  try {
+    const response = await axios.delete(`/api/profile/exp/${id}`);
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: response.data,
+    });
+    dispatch(setAlert("Profile Experience Deleted", "danger"));
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Delete Education
+export const deleteEducation = (id) => async (dispatch) => {
+  try {
+    const deleteInfo = await axios.delete(`/api/profile/education/${id}`);
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: deleteInfo.data,
+    });
+    dispatch(setAlert("Education Field deleted Succesfully", "danger"));
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Delete the Entire Account and Profile
+export const deleteAccount = () => async (dispatch) => {
+  if (window.confirm("Really Wanna Delete??")) {
+    try {
+      const deleteInfo = await axios.delete("/api/profile");
+      dispatch({
+        type: CLEAR_PROFILE,
+      });
+      dispatch({
+        type: ACCOUNT_DELETED,
+      });
+      dispatch(setAlert("Account Deleted Succesfully", "success"));
+    } catch (error) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: error.response.statusText,
+          status: error.response.status,
+        },
+      });
+    }
+  }
+};
+
+// Get All Profiles
+export const getAllProfiles = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const resp = await axios.get("/api/profile");
+    dispatch({
+      type: GET_PROFILES,
+      payload: resp.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: err.response.statuText,
+        status: err.response.status,
+      },
+    });
+  }
+};
+
+// Get Particular Profile
+export const getParticularProfile = (Userid) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/profile/user/${Userid}`);
+    dispatch({
+      type: GET_PROFILE,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: err.response.statuText,
+        status: err.response.status,
+      },
+    });
+  }
+};
+
+// Get Github Repos
+export const getGithubRepos = (githubUserName) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/profile/github/${githubUserName}`);
+    dispatch({
+      type: GET_REPOS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: err.response.statuText,
+        status: err.response.status,
       },
     });
   }
