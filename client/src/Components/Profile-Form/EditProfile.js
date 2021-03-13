@@ -44,7 +44,7 @@ const EditProfile = ({
       githubUserName:
         isLoading || !profile.githubUserName ? " " : profile.githubUserName,
     });
-  }, [isLoading]);
+  }, [isLoading, getCurrentProfile]);
 
   const {
     company,

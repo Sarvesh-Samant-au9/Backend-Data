@@ -176,7 +176,7 @@ export const deleteEducation = (id) => async (dispatch) => {
 export const deleteAccount = () => async (dispatch) => {
   if (window.confirm("Really Wanna Delete??")) {
     try {
-      const deleteInfo = await axios.delete("/api/profile");
+      await axios.delete("/api/profile");
       dispatch({
         type: CLEAR_PROFILE,
       });
@@ -209,7 +209,7 @@ export const getAllProfiles = () => async (dispatch) => {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
-        msg: err.response.statuText,
+        msg: err.response.statusText,
         status: err.response.status,
       },
     });
@@ -219,12 +219,13 @@ export const getAllProfiles = () => async (dispatch) => {
 // Get Particular Profile
 export const getParticularProfile = (Userid) => async (dispatch) => {
   try {
-    const response = await axios.get(`/api/profile/user/${Userid}`);
+    const response = await axios.get(`/api/profile/users/${Userid}`);
     dispatch({
       type: GET_PROFILE,
       payload: response.data,
     });
   } catch (err) {
+    dispatch({ type: CLEAR_PROFILE });
     dispatch({
       type: PROFILE_ERROR,
       payload: {
@@ -244,6 +245,7 @@ export const getGithubRepos = (githubUserName) => async (dispatch) => {
       payload: response.data,
     });
   } catch (err) {
+    dispatch(setAlert("No such Github User ID available", "danger"));
     dispatch({
       type: PROFILE_ERROR,
       payload: {
